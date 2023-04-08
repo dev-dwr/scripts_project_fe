@@ -48,7 +48,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       setIsAuth(false);
       setUser(null);
-      setError(err);
     }
   };
 
@@ -90,21 +89,22 @@ export const AuthProvider = ({ children }) => {
   const uploadCv = async (formData, accessToken) => {
     try {
       setLoading(true);
-      const re = await axios.put(`${process.env.API_URL}/api/current_user/cv`,{
-        formData
-      },{
-        headers:{
-          Authorization: `Bearer ${accessToken}`
+      const re = await axios.put(
+        `${process.env.API_URL}/api/current_user/cv`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
+      );
       if (re.data) {
         setLoading(false);
-        setUploaded(true)
-        router.push("/login");
+        setUploaded(true);
       }
     } catch (err) {
       setLoading(false);
-      setUploaded(false)
+      setUploaded(false);
       setError(err);
     }
   };
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
   const clearErrors = () => {
     setError(null);
   };
-  
+
   return (
     <AuthContext.Provider
       value={{
@@ -126,7 +126,8 @@ export const AuthProvider = ({ children }) => {
         register,
         clearErrors,
         uploadCv,
-        uploaded
+        uploaded,
+        setUploaded,
       }}
     >
       {children}

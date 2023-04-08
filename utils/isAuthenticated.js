@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const isAuthenticated = async (accessToken) => {
   try {
-    const res = await axios.post(`${process.env.API_KEY}/api/token/verify`, {
+    const res = await axios.post(`${process.env.API_URL}/api/token/verify`, {
       token: accessToken,
     });
 

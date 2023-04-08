@@ -34,7 +34,7 @@ export default async function handler (req, res){
         res.status(result.status).json({ error: "auth failed" });
       }
     } catch (er) {
-      res.status(500).json({ error: "server error" });
+      res.status(500).json({ message: "Authentication error" });
     }
   }
 };

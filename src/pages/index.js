@@ -2,15 +2,16 @@ import DefaultLayout from "../../layout/DefaultLayout";
 import MainPage from "../../layout/MainPage";
 import axios from "axios";
 
-export default function Home({ data }) {
+
+export default function Home({ data, accessToken }) {
   return (
     <DefaultLayout>
-      <MainPage data={data} />
+      <MainPage data={data} accessToken={accessToken}/>
     </DefaultLayout>
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query, req }) {
   const keyword = query.keyword || "";
   const location = query.location || "";
   const page = query.page || "1";
@@ -26,6 +27,8 @@ export async function getServerSideProps({ query }) {
     maxSalary = max
   }
 
+  const accessToken = req.cookies.access || '';
+
 
   const qs = `keyword=${keyword}&location=${location}&page=${page}&job_type=${jobType}&experience=${experience}
   &min_salary=${minSalary}&max_salary=${maxSalary}`;
@@ -33,6 +36,7 @@ export async function getServerSideProps({ query }) {
   return {
     props: {
       data,
+      accessToken
     },
   };
 }

@@ -32,7 +32,6 @@ export default function Search() {
               <form className="form" onSubmit={submit}>
                 <div className="inputWrapper">
                   <div className="inputBox">
-                    <i aria-hidden className="fas fa-search"></i>
                     <input
                       type="text"
                       placeholder="Enter Your Keyword"

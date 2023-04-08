@@ -2,26 +2,31 @@ import Header from "../../layout/Header";
 import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/authContext";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const { isAuth, error, loading, login } = useContext(AuthContext);
+  const { isAuth, error, loading, login, clearErrors } =
+    useContext(AuthContext);
 
   function submit(e) {
     e.preventDefault();
     login({ username: email, password: password });
-    router.push("/")
+    // router.push("/")
   }
 
   useEffect(() => {
     if (error) {
-      console.error(error);
+      // clearErrors();
+      // alert(error);
+      console.log(error)
     }
     if (isAuth && !loading) {
       router.push("/");
     }
-  }, [isAuth, error, loading]);
+  }, [isAuth, loading]);
 
   return (
     <>
@@ -31,6 +36,7 @@ export default function Login() {
           <div className="right">
             <div className="rightContentWrapper">
               <div className="headerWrapper">
+                {error && (<div>{error.response.data.message}</div>)}
                 <h2>Login</h2>
               </div>
               <form className="form" onSubmit={submit}>
@@ -60,7 +66,7 @@ export default function Login() {
                   </button>
                 </div>
                 <p style={{ textDecoration: "none" }} className="signup">
-                  <a href="/register">Create an account</a>
+                  <Link href="/register">Create an account</Link>
                 </p>
               </form>
             </div>

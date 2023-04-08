@@ -1,11 +1,14 @@
-import '@/styles/globals.css'
-import { AuthProvider } from '../../context/authContext';
-import 'bootstrap/dist/css/bootstrap.css';
+import "@/styles/globals.css";
+import { AuthProvider } from "../../context/authContext";
+import { JobProvider } from "../../context/jobContext";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function App({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <JobProvider>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </JobProvider>
   );
 }

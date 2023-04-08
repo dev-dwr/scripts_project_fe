@@ -1,8 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import moment from "moment";
+import JobContext from "../../context/jobContext";
+import { useContext } from "react";
 
-const OfferItem = ({ offer }) => {
+const OfferItem = ({ offer, accessToken }) => {
+
+  
   return (
     <Link href={`/offer/${offer.id}`} legacyBehavior>
       <a className="job-listing">
