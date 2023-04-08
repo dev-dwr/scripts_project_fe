@@ -18,10 +18,8 @@ export default function OfferDetails({ offer, candidates_count, accessToken }) {
   }, [error]);
 
   const expiredDate = moment(offer.expiration_date);
-  console.log(offer);
   const currMoment = moment(Date.now());
   const isJobExpired = expiredDate.diff(currMoment, "days") < 0 ? true : false;
-  console.log(isJobExpired);
   return (
     <>
       <Header />

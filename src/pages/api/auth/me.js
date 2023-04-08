@@ -2,7 +2,7 @@ import cookie from "cookie";
 import axios from 'axios'
 
 export default async function handler (req, res){
-    if(req.method === "GET"){
+    if(req.method == "GET"){
         const myCookie = cookie.parse(req.headers.cookie || '')
         const access = myCookie.access;
         if(!access){

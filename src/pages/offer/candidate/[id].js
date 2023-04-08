@@ -1,8 +1,9 @@
-import Header from "../../../layout/Header";
-import { isAuthenticated } from "../../../utils/isAuthenticated";
+import Header from "../../../../layout/Header";
+import { isAuthenticated } from "../../../../utils/isAuthenticated";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import JobContext from "../../../context/jobContext";
+import JobContext from "../../../../context/jobContext";
+import axios from "axios";
 
 const JOB_TYPES = ["Permanent", "Internship", "Temporary"];
 const INDUSTRIES = [
@@ -13,7 +14,7 @@ const INDUSTRIES = [
   "Information Technology",
 ];
 const EXPERIENCE = ["No Experience", "1 Year", "2 Years"];
-export default function NewOffer({accessToken}) {
+export default function UpdateOffer({ accessToken, offer }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
@@ -24,18 +25,28 @@ export default function NewOffer({accessToken}) {
   const [salary, setSalary] = useState("");
   const [company, setCompany] = useState("");
 
-  const { error, createNewOffer, created, setCreated } = useContext(JobContext);
+  const { error, updateExistingOffer, updated, setUpdated } =
+    useContext(JobContext);
 
   useEffect(() => {
     if (error) {
       console.error(error);
     }
-    if (created) {
-      setCreated(false);
-      alert("offer has been created");
+    if (offer) {
+      setTitle(offer.title);
+      setDescription(offer.description);
+      setEmail(offer.email);
+      setAddress(offer.address);
+      setJobType(offer.job_type);
+      setIndustry(offer.industry);
+      setExperience(offer.experience);
+      setSalary(offer.month_salary);
+      setCompany(offer.company);
+      setUpdated(true)
     }
-  }, [error, created]);
+  }, [error, updated]);
 
+  console.log(offer);
   const submit = (e) => {
     e.preventDefault();
 
@@ -50,7 +61,8 @@ export default function NewOffer({accessToken}) {
       month_salary: salary,
       company,
     };
-    createNewOffer(data, accessToken);
+    updateExistingOffer(offer.id, data, accessToken);
+    if(updated) alert("offer has been updated");
   };
   return (
     <>
@@ -58,7 +70,7 @@ export default function NewOffer({accessToken}) {
       <div className="newJobcontainer">
         <div className="formWrapper">
           <div className="headerWrapper">
-            <h1>POST A JOB</h1>
+            <h1>Update an offer</h1>
           </div>
           <form className="form" onSubmit={submit}>
             <div className="row">
@@ -178,7 +190,7 @@ export default function NewOffer({accessToken}) {
               </div>
 
               <div className="col text-center mt-3">
-                <button className="createButton">Create Job</button>
+                <button className="createButton">Update Job</button>
               </div>
             </div>
           </form>
@@ -188,7 +200,7 @@ export default function NewOffer({accessToken}) {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, params }) {
   const accessToken = req.cookies.access || "";
   const user = await isAuthenticated(accessToken);
   if (!user) {
@@ -199,9 +211,19 @@ export async function getServerSideProps({ req }) {
       },
     };
   }
+  const re = await axios.get(
+    `${process.env.API_URL}/api/offer/${params.id}/candidates`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  console.log(re.data);
   return {
     props: {
       accessToken,
+      offer: re.data[0].offer,
     },
   };
 }

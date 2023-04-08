@@ -22,20 +22,20 @@ const Header = () => {
           {user && user ? (
             <>
               <DropdownButton id="dropdown-basic-button" style={{ marginLeft: '20px' }} title={`Hello, ${user.first_name}`}>
-                <Dropdown.Item href="/myjobs">My Jobs</Dropdown.Item>
+                <Dropdown.Item href="offer/myoffers">My Jobs</Dropdown.Item>
                 <Dropdown.Item href="/applied">Applied Jobs</Dropdown.Item>
                 <Dropdown.Item href="/uploadcv">Upload CV</Dropdown.Item>
                 <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
               </DropdownButton>
             </>
           ) : (
-            !loading && (
+            // !loading && (
               <Link href="/login">
                 <button className="loginButtonHeader">
                   <span>Login</span>
                 </button>
               </Link>
-            )
+            // )
           )}
         </div>
       </div>

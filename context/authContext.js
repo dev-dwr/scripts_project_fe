@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   const me = async () => {
     try {
       setLoading(true);
-      const re = await axios.get("api/auth/me");
+      const re = await axios.get(`/api/auth/me`);
       if (re.data.user) {
         setIsAuth(true);
         setLoading(false);
