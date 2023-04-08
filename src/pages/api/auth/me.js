@@ -5,9 +5,9 @@ export default async function handler (req, res){
     if(req.method == "GET"){
         const myCookie = cookie.parse(req.headers.cookie || '')
         const access = myCookie.access;
-        // if(!access){
-        //     return res.status(401).json({error: 'Please login first'})
-        // }
+        if(!access){
+            return res.status(401).json({error: 'Please login first'})
+        }
         try{
         const result = await axios.get(
             `${process.env.API_URL}/api/current_user`,
