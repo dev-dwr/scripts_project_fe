@@ -14,7 +14,7 @@ const OfferItem = ({ offer, accessToken }) => {
           <div className="job-listing-description">
             <h4 className="job-listing-company">{offer.company}</h4>
             <h3 className="job-listing-title">{offer.title}</h3>
-            <p className="job-listing-text">{offer.description}</p>
+            <p className="job-listing-text">{offer.description.slice(0,200)}</p>
           </div>
 
           <span className="bookmark-icon"></span>
