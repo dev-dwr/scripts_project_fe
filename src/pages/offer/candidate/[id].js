@@ -46,7 +46,6 @@ export default function UpdateOffer({ accessToken, offer }) {
     }
   }, [error, updated]);
 
-  console.log(offer);
   const submit = (e) => {
     e.preventDefault();
 
@@ -212,7 +211,7 @@ export async function getServerSideProps({ req, params }) {
     };
   }
   const re = await axios.get(
-    `${process.env.API_URL}/api/offer/${params.id}/candidates`,
+    `${process.env.API_URL}/api/offers/${params.id}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -223,7 +222,7 @@ export async function getServerSideProps({ req, params }) {
   return {
     props: {
       accessToken,
-      offer: re.data[0].offer,
+      offer: re.data.offer,
     },
   };
 }

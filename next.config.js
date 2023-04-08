@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   env:{
-    // API_URL: "http://localhost:8000", 
-    API_URL: "https://scripts-project-2023.herokuapp.com"
+    API_URL: "http://localhost:8000", 
+    // API_URL: "https://scripts-project-2023.herokuapp.com"
   }
 }
 
